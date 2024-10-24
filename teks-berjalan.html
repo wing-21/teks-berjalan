@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teks Berjalan</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            font-family: 'Courier New', Courier, monospace; /* Font yang diubah */
+            font-size: 24px; /* Ukuran teks yang diubah */
+            font-weight: bold;
+            animation: marquee 10s linear infinite;
+        }
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        .input-area {
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        input[type="text"] {
+            font-size: 18px; /* Ukuran input teks yang diubah */
+        }
+        button {
+            font-size: 18px; /* Ukuran tombol yang diubah */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="input-area" id="inputArea">
+        <label for="inputText">Masukkan teks untuk berjalan:</label>
+        <input type="text" id="inputText" placeholder="Masukkan teks di sini">
+        <button onclick="showMarquee()">Tampilkan</button>
+    </div>
+
+    <div id="iconArea" class="hidden">
+        <span class="icon" onclick="showInput()">✏️</span>
+    </div>
+
+    <div class="marquee">
+        <div id="marqueeContent" class="marquee-content">Teks berjalan akan tampil di sini</div>
+    </div>
+
+    <script>
+        function showMarquee() {
+            var inputText = document.getElementById("inputText").value;
+            var marqueeContent = document.getElementById("marqueeContent");
+            
+            if (inputText.trim() !== "") {
+                marqueeContent.textContent = inputText;
+            } else {
+                marqueeContent.textContent = "Teks berjalan akan tampil di sini";
+            }
+
+            // Sembunyikan input area dan tampilkan ikon
+            document.getElementById("inputArea").classList.add("hidden");
+            document.getElementById("iconArea").classList.remove("hidden");
+        }
+
+        function showInput() {
+            // Tampilkan kembali input area dan sembunyikan ikon
+            document.getElementById("inputArea").classList.remove("hidden");
+            document.getElementById("iconArea").classList.add("hidden");
+        }
+    </script>
+
+</body>
+</html>
