@@ -13,7 +13,7 @@
             flex-direction: column;
             align-items: center;
             background-color: #f0f0f0;
-            overflow: hidden; /* Mencegah scrollbar yang tidak diinginkan */
+            overflow: hidden;
         }
 
         .marquee {
@@ -26,15 +26,15 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative; /* Pastikan ini terpisah dari elemen lain */
-            z-index: 1; /* Mengatur z-index */
+            position: relative;
+            z-index: 1;
         }
 
         .marquee-content {
             display: inline-block;
             padding-left: 100%;
-            font-size: 24px; /* Ukuran default */
-            color: #000000; /* Warna teks default */
+            font-size: 24px;
+            color: #000000;
             animation: marquee 10s linear infinite;
         }
 
@@ -54,9 +54,9 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px; /* Batas lebar maksimal */
+            max-width: 500px;
             position: relative;
-            z-index: 2; /* Mengatur z-index */
+            z-index: 2;
         }
 
         .input-area label {
@@ -68,7 +68,7 @@
 
         .input-area input,
         .input-area select {
-            width: calc(100% - 22px); /* Lebar penuh dengan padding */
+            width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
@@ -87,7 +87,7 @@
             margin-top: 10px;
             display: block;
             text-align: center;
-            z-index: 2; /* Mengatur z-index */
+            z-index: 2;
         }
 
         button {
@@ -108,16 +108,16 @@
         /* Responsif */
         @media (max-width: 600px) {
             .marquee-content {
-                font-size: 18px; /* Ukuran lebih kecil di layar kecil */
+                font-size: 18px;
             }
 
             .input-area input,
             .input-area select {
-                font-size: 14px; /* Ukuran font input lebih kecil */
+                font-size: 14px;
             }
 
             button {
-                font-size: 16px; /* Ukuran font tombol lebih kecil */
+                font-size: 16px;
             }
         }
     </style>
@@ -131,11 +131,13 @@
         <label for="fontSize">Ukuran Huruf:</label>
         <input type="number" id="fontSize" placeholder="Contoh: 24" min="10" value="24"> px<br>
 
-        <label for="bgColor">Warna Background (Full Layar):</label>
-        <input type="color" id="bgColor" value="#f0f0f0"><br>
+        <label for="bgColor">Warna Background:</label>
+        <input type="range" id="bgColor" min="0" max="255" value="240" onchange="updateBackgroundColor()">
+        <span id="bgColorValue">#f0f0f0</span><br>
 
         <label for="textColor">Warna Teks:</label>
-        <input type="color" id="textColor" value="#000000"><br>
+        <input type="range" id="textColor" min="0" max="255" value="0" onchange="updateTextColor()">
+        <span id="textColorValue">#000000</span><br>
 
         <label for="speed">Kecepatan Teks (detik):</label>
         <input type="number" id="speed" placeholder="Contoh: 10" min="1" value="10"><br>
@@ -161,12 +163,24 @@
     </div>
 
     <script>
+        function updateBackgroundColor() {
+            var value = document.getElementById("bgColor").value;
+            var color = `rgb(${value}, ${value}, ${value})`;
+            document.getElementById("body").style.backgroundColor = color;
+            document.getElementById("bgColorValue").innerText = color;
+        }
+
+        function updateTextColor() {
+            var value = document.getElementById("textColor").value;
+            var color = `rgb(${value}, ${value}, ${value})`;
+            document.getElementById("marqueeContent").style.color = color;
+            document.getElementById("textColorValue").innerText = color;
+        }
+
         function showMarquee() {
             var inputText = document.getElementById("inputText").value;
             var marqueeContent = document.getElementById("marqueeContent");
             var fontSize = document.getElementById("fontSize").value;
-            var bgColor = document.getElementById("bgColor").value;
-            var textColor = document.getElementById("textColor").value;
             var speed = document.getElementById("speed").value;
             var fontFamily = document.getElementById("fontFamily").value;
 
@@ -177,11 +191,9 @@
                 marqueeContent.textContent = "Teks berjalan akan tampil di sini";
             }
 
-            // Set ukuran huruf, warna background layar penuh, warna teks, jenis font, dan kecepatan
+            // Set ukuran huruf, jenis font, dan kecepatan
             marqueeContent.style.fontSize = fontSize + "px";
-            marqueeContent.style.color = textColor;
             marqueeContent.style.fontFamily = fontFamily;
-            document.getElementById("body").style.backgroundColor = bgColor; // Ubah background seluruh layar
             marqueeContent.style.animationDuration = speed + "s";
 
             // Sembunyikan input area dan tampilkan ikon
