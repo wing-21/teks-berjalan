@@ -9,6 +9,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            overflow: hidden; /* Mencegah scrollbar yang tidak diinginkan */
         }
 
         .marquee {
@@ -18,6 +23,11 @@
             box-sizing: border-box;
             margin-top: 20px;
             padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative; /* Pastikan ini terpisah dari elemen lain */
+            z-index: 1; /* Mengatur z-index */
         }
 
         .marquee-content {
@@ -43,6 +53,10 @@
             background-color: #f9f9f9;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px; /* Batas lebar maksimal */
+            position: relative;
+            z-index: 2; /* Mengatur z-index */
         }
 
         .input-area label {
@@ -73,6 +87,7 @@
             margin-top: 10px;
             display: block;
             text-align: center;
+            z-index: 2; /* Mengatur z-index */
         }
 
         button {
@@ -88,6 +103,22 @@
 
         button:hover {
             background-color: #0056b3;
+        }
+
+        /* Responsif */
+        @media (max-width: 600px) {
+            .marquee-content {
+                font-size: 18px; /* Ukuran lebih kecil di layar kecil */
+            }
+
+            .input-area input,
+            .input-area select {
+                font-size: 14px; /* Ukuran font input lebih kecil */
+            }
+
+            button {
+                font-size: 16px; /* Ukuran font tombol lebih kecil */
+            }
         }
     </style>
 </head>
