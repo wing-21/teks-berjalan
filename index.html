@@ -3,27 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teks Berjalan</title>
+    <title>Teks Berjalan dengan Pengaturan</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
         }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-area label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .input-area input,
+        .input-area select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .input-area input[type="color"] {
+            padding: 0;
+            height: 40px;
+        }
+
+        .input-area button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background-color: #0056b3;
+        }
+
         .marquee {
             width: 100%;
             overflow: hidden;
             white-space: nowrap;
             box-sizing: border-box;
             margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
         }
+
         .marquee-content {
             display: inline-block;
             padding-left: 100%;
-            font-family: 'Courier New', Courier, monospace; /* Font yang diubah */
-            font-size: 70px; /* Ukuran teks yang diubah */
-            font-weight: bold;
-            color:white;
+            font-size: 24px;
+            color: #000;
             animation: marquee 10s linear infinite;
         }
+
         @keyframes marquee {
             0% {
                 transform: translateX(100%);
@@ -32,50 +93,84 @@
                 transform: translateX(-100%);
             }
         }
-        .input-area {
-            margin-bottom: 20px;
-        }
-        .hidden {
-            display: none;
-        }
+
         .icon {
             font-size: 24px;
             cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
         }
-        input[type="text"] {
-            font-size: 18px; /* Ukuran input teks yang diubah */
-        }
-        button {
-            font-size: 18px; /* Ukuran tombol yang diubah */
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
-<body>
+<body id="body">
 
-    <div class="input-area" id="inputArea">
-        <label for="inputText">Masukkan teks untuk berjalan:</label>
-        <input type="text" id="inputText" placeholder="Masukkan teks di sini">
-        <button onclick="showMarquee()">Tampilkan</button>
-    </div>
+    <div class="container">
+        <h1>Pengaturan Teks Berjalan</h1>
 
-    <div id="iconArea" class="hidden">
-        <span class="icon" onclick="showInput()">✏️</span>
-    </div>
+        <div class="input-area" id="inputArea">
+            <label for="inputText">Masukkan teks untuk berjalan:</label>
+            <input type="text" id="inputText" placeholder="Masukkan teks di sini">
 
-    <div class="marquee">
-        <div id="marqueeContent" class="marquee-content">Teks berjalan akan tampil di sini</div>
+            <label for="fontSize">Ukuran Huruf:</label>
+            <input type="number" id="fontSize" placeholder="Contoh: 24" min="10" value="24"> 
+
+            <label for="bgColor">Warna Background (Full Layar):</label>
+            <input type="color" id="bgColor" value="#f0f0f0">
+
+            <label for="textColor">Warna Teks:</label>
+            <input type="color" id="textColor" value="#000000">
+
+            <label for="speed">Kecepatan Teks (detik):</label>
+            <input type="number" id="speed" placeholder="Contoh: 10" min="1" value="10">
+
+            <label for="fontFamily">Jenis Font:</label>
+            <select id="fontFamily">
+                <option value="'Arial', sans-serif">Arial</option>
+                <option value="'Courier New', Courier, monospace">Courier New</option>
+                <option value="'Georgia', serif">Georgia</option>
+                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                <option value="'Verdana', sans-serif">Verdana</option>
+            </select>
+
+            <button onclick="showMarquee()">Tampilkan</button>
+        </div>
+
+        <div id="iconArea" class="hidden">
+            <span class="icon" onclick="showInput()">✏️</span>
+        </div>
+
+        <div class="marquee">
+            <div id="marqueeContent" class="marquee-content">Teks berjalan akan tampil di sini</div>
+        </div>
     </div>
 
     <script>
         function showMarquee() {
             var inputText = document.getElementById("inputText").value;
             var marqueeContent = document.getElementById("marqueeContent");
-            
+            var fontSize = document.getElementById("fontSize").value;
+            var bgColor = document.getElementById("bgColor").value;
+            var textColor = document.getElementById("textColor").value;
+            var speed = document.getElementById("speed").value;
+            var fontFamily = document.getElementById("fontFamily").value;
+
+            // Set teks berjalan
             if (inputText.trim() !== "") {
                 marqueeContent.textContent = inputText;
             } else {
                 marqueeContent.textContent = "Teks berjalan akan tampil di sini";
             }
+
+            // Set ukuran huruf, warna background layar penuh, warna teks, jenis font, dan kecepatan
+            marqueeContent.style.fontSize = fontSize + "px";
+            marqueeContent.style.color = textColor;
+            marqueeContent.style.fontFamily = fontFamily;
+            document.getElementById("body").style.backgroundColor = bgColor; // Ubah background seluruh layar
+            marqueeContent.style.animationDuration = speed + "s";
 
             // Sembunyikan input area dan tampilkan ikon
             document.getElementById("inputArea").classList.add("hidden");
