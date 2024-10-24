@@ -9,13 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f0f0f0;
-            overflow: hidden;
         }
-
         .marquee {
             width: 100%;
             overflow: hidden;
@@ -23,21 +17,14 @@
             box-sizing: border-box;
             margin-top: 20px;
             padding: 10px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1;
         }
-
         .marquee-content {
             display: inline-block;
             padding-left: 100%;
-            font-size: 24px;
-            color: #000000;
+            font-size: 24px; /* Ukuran default */
+            color: #000000; /* Warna teks default */
             animation: marquee 10s linear infinite;
         }
-
         @keyframes marquee {
             0% {
                 transform: translateX(100%);
@@ -46,79 +33,16 @@
                 transform: translateX(-100%);
             }
         }
-
         .input-area {
             margin-bottom: 20px;
             padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-            position: relative;
-            z-index: 2;
         }
-
-        .input-area label {
-            font-weight: bold;
-            color: #555;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .input-area input,
-        .input-area select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
         .hidden {
             display: none;
         }
-
         .icon {
             font-size: 24px;
             cursor: pointer;
-            margin-top: 10px;
-            display: block;
-            text-align: center;
-            z-index: 2;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Responsif */
-        @media (max-width: 600px) {
-            .marquee-content {
-                font-size: 18px;
-            }
-
-            .input-area input,
-            .input-area select {
-                font-size: 14px;
-            }
-
-            button {
-                font-size: 16px;
-            }
         }
     </style>
 </head>
@@ -126,21 +50,19 @@
 
     <div class="input-area" id="inputArea">
         <label for="inputText">Masukkan teks untuk berjalan:</label>
-        <input type="text" id="inputText" placeholder="Masukkan teks di sini"><br>
+        <input type="text" id="inputText" placeholder="Masukkan teks di sini"><br><br>
 
         <label for="fontSize">Ukuran Huruf:</label>
-        <input type="number" id="fontSize" placeholder="Contoh: 24" min="10" value="24"> px<br>
+        <input type="number" id="fontSize" placeholder="Contoh: 24" min="10" value="24"> px<br><br>
 
-        <label for="bgColor">Warna Background:</label>
-        <input type="range" id="bgColor" min="0" max="255" value="240" onchange="updateBackgroundColor()">
-        <span id="bgColorValue">#f0f0f0</span><br>
+        <label for="bgColor">Warna Background (Full Layar):</label>
+        <input type="color" id="bgColor" value="#f0f0f0"><br><br>
 
         <label for="textColor">Warna Teks:</label>
-        <input type="range" id="textColor" min="0" max="255" value="0" onchange="updateTextColor()">
-        <span id="textColorValue">#000000</span><br>
+        <input type="color" id="textColor" value="#000000"><br><br>
 
         <label for="speed">Kecepatan Teks (detik):</label>
-        <input type="number" id="speed" placeholder="Contoh: 10" min="1" value="10"><br>
+        <input type="number" id="speed" placeholder="Contoh: 10" min="1" value="10"><br><br>
 
         <label for="fontFamily">Jenis Font:</label>
         <select id="fontFamily">
@@ -149,7 +71,7 @@
             <option value="'Georgia', serif">Georgia</option>
             <option value="'Times New Roman', Times, serif">Times New Roman</option>
             <option value="'Verdana', sans-serif">Verdana</option>
-        </select><br>
+        </select><br><br>
 
         <button onclick="showMarquee()">Tampilkan</button>
     </div>
@@ -163,24 +85,12 @@
     </div>
 
     <script>
-        function updateBackgroundColor() {
-            var value = document.getElementById("bgColor").value;
-            var color = `rgb(${value}, ${value}, ${value})`;
-            document.getElementById("body").style.backgroundColor = color;
-            document.getElementById("bgColorValue").innerText = color;
-        }
-
-        function updateTextColor() {
-            var value = document.getElementById("textColor").value;
-            var color = `rgb(${value}, ${value}, ${value})`;
-            document.getElementById("marqueeContent").style.color = color;
-            document.getElementById("textColorValue").innerText = color;
-        }
-
         function showMarquee() {
             var inputText = document.getElementById("inputText").value;
             var marqueeContent = document.getElementById("marqueeContent");
             var fontSize = document.getElementById("fontSize").value;
+            var bgColor = document.getElementById("bgColor").value;
+            var textColor = document.getElementById("textColor").value;
             var speed = document.getElementById("speed").value;
             var fontFamily = document.getElementById("fontFamily").value;
 
@@ -191,9 +101,11 @@
                 marqueeContent.textContent = "Teks berjalan akan tampil di sini";
             }
 
-            // Set ukuran huruf, jenis font, dan kecepatan
+            // Set ukuran huruf, warna background layar penuh, warna teks, jenis font, dan kecepatan
             marqueeContent.style.fontSize = fontSize + "px";
+            marqueeContent.style.color = textColor;
             marqueeContent.style.fontFamily = fontFamily;
+            document.getElementById("body").style.backgroundColor = bgColor; // Ubah background seluruh layar
             marqueeContent.style.animationDuration = speed + "s";
 
             // Sembunyikan input area dan tampilkan ikon
@@ -210,3 +122,5 @@
 
 </body>
 </html>
+
+ini sudah bagus, cuma tampilan inputannya yang tidak rapi 
